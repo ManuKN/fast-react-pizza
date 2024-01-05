@@ -1,6 +1,6 @@
 function App() {
   return (
-    <div>Hello vite</div>
+    <div>Hello vite+React</div>
   )
 }
 
