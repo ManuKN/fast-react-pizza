@@ -1,5 +1,6 @@
 //import { useState } from "react";
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
+import Button from "../../ui/Button";
 import { createOrder } from "../../services/apiRestaurant";
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -39,45 +40,47 @@ function CreateOrder() {
   const isSubmitting = navigation.state === "submitting"
 
   return (
-    <div>
-      <h2>Ready to order? Let's go!</h2>
+    <div className="px-4 py-6">
+      <h2 className="text-xl font-semibold mb-6">Ready to order? Let's go!</h2>
 
       {/* <Form method="POST" action="/order/new"> */}
       <Form method="POST">
-        <div>
-          <label>First Name</label>
-          <input type="text" name="customer" required />
+        <div className="flex gap-x-12 px-2 py-2 flex-col sm:flex sm:flex-row sm:justify-between">
+          <label className="sm:basis-40">First Name</label>
+          <input className="input mb-2 w-full" type="text" name="customer" required />
         </div>
 
-        <div>
-          <label>Phone number</label>
-          <div>
-            <input type="tel" name="phone" required />
-          </div>
-          {formError?.phone && <p>{formError.phone}</p>}
-        </div>
-
-        <div>
-          <label>Address</label>
-          <div>
-            <input type="text" name="address" required />
+        <div className="flex gap-2 px-2 py-2 flex-col sm:flex sm:flex-row sm:justify-between">
+          <label className="sm:basis-40">Phone number</label>
+          <div className="grow">
+            <input className="input mb-2 w-full " type="tel" name="phone" required />
+            {formError?.phone && <p className="text-xs p-2 mt-2 bg-red-100 rounded-md text-red-700 ">{formError.phone}</p>}
           </div>
         </div>
 
-        <div>
+        <div className="flex gap-2 px-2 py-2 flex-col sm:flex sm:flex-row sm:justify-between">
+          <label className="sm:basis-40">Address</label>
+          <div className="grow">
+            <input className='input w-full mb-2'
+            type="text" name="address" required />
+          </div>
+        </div>
+
+        <div className="flex gap-5 mb-6 mt-2">
           <input
             type="checkbox"
             name="priority"
             id="priority"
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
+            className="h-6 w-6 accent-yellow-400 focus:ring focus:ring-yellow-400 focus:ring-offset-2"
           />
-          <label htmlFor="priority">Want to yo give your order priority?</label>
+          <label htmlFor="priority" className="font-semibold">Want to yo give your order priority?</label>
         </div>
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)}/>
-          <button disabled={isSubmitting}>{isSubmitting? 'Placing Order...' : 'Order now'}</button>
+          <Button type='primary' disabled={isSubmitting} >{isSubmitting? 'Placing Order...' : 'ORDER NOW'}</Button>
         </div>
       </Form>
     </div>
@@ -103,5 +106,6 @@ export async function action({request}){
   //if everything is okay then create order and redirect else display errors
   const newOrder = await createOrder(order)
   return redirect(`/order/${newOrder.id}`)
+   return null
 }
 export default CreateOrder;
