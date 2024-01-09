@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 function CartItem({ item }) {
   const { pizzaId, name, quantity, totalPrice } = item;
   const currentQuantity = useSelector(getCartItemquanity(pizzaId))
+  console.log(item)
 
   return (
     <li className="py-3 sm:flex sm:items-center sm:justify-between">
